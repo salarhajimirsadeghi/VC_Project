@@ -13,19 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from vcplatform import views
 from vcplatform import models
 
 
-urlpatterns = [
-    
-    #index page
-    url(r'^$', views.index, name='index'),
-    
-    #VC Page --- ex: /vc/12/ == 8vc (e.g)
-    url(r'^vc/(?P<vc_id>[0-9]+)/$', views.vc_page, name='vc_page'),
-
-    #Company Page ---- ex: /company/24 == uber (e.g.)
-    url(r'^company/(?P<company_id>[0-9]+)/$', views.company_page, name='company_page'),
+urlpatterns = [    
+    #vcplatform urls
+    url(r'^', include('vcplatform.urls')) 
 ]
