@@ -1,3 +1,6 @@
+<!-- API KEY: AIzaSyDRfw5n_46CwaeP2QQtGxXB2d63n40JEY8-->
+
+
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +12,7 @@
     <link rel="icon" href="../../favicon.ico">
 
     {% if VC_info%}
-      <title>Dashboard for </title>
+      <title>Dashboard | {{VC_info.first.vc_name}} </title>
     {%endif%}
 
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -103,8 +106,20 @@
             <div class="col-6 col-sm-6 placeholder" style="padding-top: 50px;">                            
               <span class="text-muted">{{vc.description}}</span>
             </div>
-            <div class="col-4 col-sm-4 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+            <div class="col-6 col-sm-4 placeholder">
+              {%if vc.zipcode%}
+                <iframe
+                  width="250"
+                  height="300"
+                  frameborder="0" style="border:0"                  
+                  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDRfw5n_46CwaeP2QQtGxXB2d63n40JEY8&q={{vc.zipcode}}" allowfullscreen>
+                </iframe>      
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRfw5n_46CwaeP2QQtGxXB2d63n40JEY8&callback=initMap" type="text/javascript"></script>
+
+                {%else%}
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="250" height="300" class="rounded-circle" alt="Generic placeholder thumbnail">                  
+                {% endif %}                  
+
               <h4> Address </h4>
               {%if vc.address%}
                 <span class="text-muted"> {{vc.address}}</span>
