@@ -18,14 +18,18 @@ def vc_page(request):
 	if (request.method == 'GET'):
 		query = request.GET.get('search_query', None)
 		try:
-			#gets item from database
-			VC_info = VC_data.objects.all().filter(vid='%s' %query)		
-			context = {'VC_info': VC_info}	
-			# print(context)	
+			context = {}
+			#gets item from database			
+			VC_info = VC_data.objects.all().filter(vc_name='%s' %query)
+			if(VC_info.exists()):
+				context = {'VC_info': VC_info}	
+				return render(request, 'vcplatform/vcdashboard.html', context)
+			
+			else:
+				raise Http404("VC does not exist")
+			#print(context)	
 		except VC_data.DoesNotExist:
-		    raise Http404("VC ID does not exist")
-		return render(request, 'vcplatform/vcdashboard.html', context)
-	
+		    raise Http404("VC does not exist")
 	else:
 		raise Http404("NOT A GET METHOD")
 

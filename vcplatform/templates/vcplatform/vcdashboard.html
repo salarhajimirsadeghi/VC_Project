@@ -8,7 +8,9 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
+    {% if VC_info%}
+      <title>Dashboard for </title>
+    {%endif%}
 
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -21,15 +23,16 @@
       <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#">Dashboard</a>
-
+      {% for vc in VC_info%}
+        <a class="navbar-brand" href="#">{{vc.vc_name}}</a>
+      {%endfor%}
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="#">Settings</a>            
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
@@ -91,31 +94,26 @@
           </ul>
         </nav>
 
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-          <h1>Dashboard</h1>
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">          
+          {% for vc in VC_info%}
+          <img src="{{vc.image}}" width="150" height="150" class="img-fluid " alt="Generic placeholder thumbnail">
 
-          <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <div class="text-muted">Something else</div>
+          
+          <section class="row text-center placeholders">            
+            <div class="col-6 col-sm-6 placeholder" style="padding-top: 50px;">                            
+              <span class="text-muted">{{vc.description}}</span>
             </div>
-            <div class="col-6 col-sm-3 placeholder">
+            <div class="col-4 col-sm-4 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
+              <h4> Address </h4>
+              {%if vc.address%}
+                <span class="text-muted"> {{vc.address}}</span>
+              {% else %}
+                <span class="text-muted"> Not Available </span>
+              {% endif %}
             </div>
           </section>
+          {% endfor%}
 
           <h2>Section title</h2>
           <div class="table-responsive">
