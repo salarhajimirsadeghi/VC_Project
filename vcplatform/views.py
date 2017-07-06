@@ -19,12 +19,24 @@ def vc_page(request):
 		query = request.GET.get('search_query', None)
 		try:
 			context = {}
+
 			#gets item from database			
 			VC_info = VC_data.objects.all().filter(vc_name='%s' %query)
-			if(VC_info.exists()):
-				context = {'VC_info': VC_info}	
+			if(VC_info.exists()):				
+				#Getting all the VCs investments			
+				vc_id = VC_info.values('vid').get()['vid']				
+				Investments = VC_Company.objects.filter(vid=vc_id).values('company_name','cid')				
+				# print("-------- INVESTMENTS --------", Investments)
+
+				### Getting information of portfolio companies ###				
+				for comp in Investments:
+					temp = Companies.objects.filter(cid=comp['cid']).values().get()
+					#adding all the company infos into Investments dictionary
+					for item in temp:
+						comp[item] = temp[item]
+
+				context = {'VC_info': VC_info, 'Investments': Investments}			
 				return render(request, 'vcplatform/vcdashboard.html', context)
-			
 			else:
 				raise Http404("VC does not exist")
 			#print(context)	
