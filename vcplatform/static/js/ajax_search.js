@@ -1,10 +1,25 @@
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
-</script> <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
-
-$(function() {
-  $("#vcsearch").autocomplete({
-    source: "/api/get_drugs/",
-    minLength: 2,
-  });
+$(function(){	
+	// console.log(" --------- MADE IT TO AJAX_SEARCH.JS ----------")
+	$('#search-bar').keyup(function(){
+		console.log(" --------- MADE IT TO AJAX_SEARCH.JS ----------")
+		$.ajax({
+			type : "POST",
+			url : "search/",
+			data : {
+				"search_t": $("#search-bar").val(),
+				"csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()
+				// '{{csrf_token}}'				
+			},
+			success: function(data){
+				// This works and alerts our screen that success
+				// alert("Successful");
+				$('#body1').html(data)
+			},			
+			dataType: 'html'
+		});
+	});
 });
+
+// function search_success(data, textStatus, jqXHR){
+// 	$('#search_result').html(data)
+// }

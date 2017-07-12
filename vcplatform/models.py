@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+
 class Companies(models.Model):
     cid = models.CharField(db_column='CID', primary_key=True, max_length=255, default='')  # Field name made lowercase.
     company_name = models.CharField(db_column='COMPANY_NAME', max_length=256, default='')  # Field name made lowercase.
@@ -25,8 +26,8 @@ class Companies(models.Model):
         db_table = 'COMPANIES'
 
     def __str__(self):
-        return ("VID: " + str(self.cid) + '\n' + 
-        "VC_NAME: " + str(self.company_name) +  '\n' +  
+        return ("CID: " + str(self.cid) + '\n' + 
+        "COMPANY_NAME: " + str(self.company_name) +  '\n' +  
         "PERMA_LINK: " + str(self.perma_link) +  '\n' + 
         "IMAGE: " + str(self.image) +  '\n' +  
         "DESCRIPTION: " + str(self.description) + '\n' + 
